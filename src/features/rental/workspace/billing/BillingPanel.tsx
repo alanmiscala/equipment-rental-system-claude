@@ -1,5 +1,7 @@
 import BillingHeader from "./components/BillingHeader";
 
+import BillingConfigurationCard from "./components/BillingConfigurationCard";
+
 import BillingPeriodSelector from "./components/BillingPeriodSelector";
 
 import BillingPreviewTable from "./components/BillingPreviewTable";
@@ -16,6 +18,7 @@ import {
   useBillingDrafts,
 } from "./useBillingDrafts";
 import { useRentalWorkspaceAggregate } from "..";
+import { evaluateBillingEligibility } from "./billingEligibility";
 
 export default function BillingPanel() {
 
@@ -27,23 +30,15 @@ export default function BillingPanel() {
   const drafts =
     useBillingDrafts();
 
-  const completedDeur = aggregate.deurs.some((deur) => Boolean(deur.endOfDay) && !deur.billingLocked);
-  const billingMethod = aggregate.rental.billingMethod ?? aggregate.contract?.billingMethod;
-  const hasConfiguredRate = Boolean(aggregate.contract && Number.isFinite(aggregate.contract.unitRate));
-  const prerequisites = [
-    [!["Cancelled", "Closed"].includes(aggregate.rental.status), "Rental is Cancelled or Closed."],
-    [Boolean(aggregate.equipment && aggregate.operator), "Equipment and operator relationships are required."],
-    [completedDeur, "Complete a billable DEUR before generating billing."],
-    [Boolean(billingMethod), "Billing method not specified."],
-    [hasConfiguredRate, "Billing rate not configured."],
-  ] as const;
-  const eligibilityMessage = prerequisites.find(([valid]) => !valid)?.[1];
-  const canGenerate = !eligibilityMessage;
+  const { hasConfiguredRate, prerequisites, eligibilityMessage, canGenerate } =
+    evaluateBillingEligibility(aggregate);
   const canCreate = canGenerate && wizard.hasGenerated && wizard.preview.length > 0;
 
   return (
 
     <div className="space-y-6">
+
+      <BillingConfigurationCard />
 
       <BillingPeriodSelector
         from={wizard.from}

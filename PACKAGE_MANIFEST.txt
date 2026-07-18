@@ -1,0 +1,12 @@
+MILESTONE 2 - Billing Configuration UI
+Package contents (6 files, project-relative paths)
+
+MODIFIED:
+src/features/rental/workspace/billing/BillingPanel.tsx
+
+NEW:
+src/features/rental/workspace/billing/billingEligibility.ts
+src/features/rental/workspace/billing/contractForm.ts
+src/features/rental/workspace/billing/components/BillingConfigurationCard.tsx
+src/features/rental/__tests__/billingConfiguration.form.test.ts
+src/features/rental/__tests__/billingConfiguration.panelState.test.ts
