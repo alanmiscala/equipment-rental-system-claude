@@ -1,18 +1,18 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { evaluateBillingEligibility } from "../workspace/billing/billingEligibility";
+import { evaluateBillingEligibility } from "@/features/rental/workspace/billing/billingEligibility";
 import {
   buildNewContractInput,
   buildContractChanges,
-} from "../workspace/billing/contractForm";
-import { createRentalContract } from "../utils/createRentalContract";
-import { updateRentalContract } from "../utils/updateRentalContract";
-import { rentalContractRepository } from "../repository/rentalContractRepository";
-import { buildRentalAggregate } from "../aggregate/builders/buildRentalAggregate";
-import type { RentalRecord } from "../types";
+} from "@/features/rental/workspace/billing/contractForm";
+import { createRentalContract } from "@/features/rental/utils/createRentalContract";
+import { updateRentalContract } from "@/features/rental/utils/updateRentalContract";
+import { rentalContractRepository } from "@/features/rental/repository/rentalContractRepository";
+import { buildRentalAggregate } from "@/features/rental/aggregate/builders/buildRentalAggregate";
+import type { RentalRecord } from "@/features/rental/types";
 import type { Operator } from "@/features/operators/types";
 import type { EquipmentRecord } from "@/features/equipment/types";
-import type { DeurRecord } from "../deur/types";
+import type { DeurRecord } from "@/features/rental/deur/types";
 
 function eligibleRental(): RentalRecord {
   return {
@@ -44,7 +44,7 @@ function completedDeur(): DeurRecord {
     totalMobilizationMinutes: 0,
     totalDemobilizationMinutes: 0,
     status: "Acknowledged",
-    endOfDay: "17:00",
+    endOfDay: true,
     billingLocked: false,
     createdAt: "2026-07-01T00:00:00.000Z",
     updatedAt: "2026-07-01T00:00:00.000Z",

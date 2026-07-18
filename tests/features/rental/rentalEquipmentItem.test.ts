@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { rentalEquipmentItemRepository } from "../repository/rentalEquipmentItemRepository";
-import { synthesizeRentalEquipmentItems } from "../aggregate/builders/synthesizeRentalEquipmentItems";
-import { buildRentalAggregate } from "../aggregate/builders/buildRentalAggregate";
-import type { RentalRecord } from "../types";
-import type { RentalEquipmentItemRecord } from "../types/RentalEquipmentItem";
-import type { RentalContractRecord } from "../types/RentalContract";
+import { rentalEquipmentItemRepository } from "@/features/rental/repository/rentalEquipmentItemRepository";
+import { synthesizeRentalEquipmentItems } from "@/features/rental/aggregate/builders/synthesizeRentalEquipmentItems";
+import { buildRentalAggregate } from "@/features/rental/aggregate/builders/buildRentalAggregate";
+import type { RentalRecord } from "@/features/rental/types";
+import type { RentalEquipmentItemRecord } from "@/features/rental/types/RentalEquipmentItem";
+import type { RentalContractRecord } from "@/features/rental/types/RentalContract";
 import type { EquipmentRecord } from "@/features/equipment/types";
 import type { Operator } from "@/features/operators/types";
 

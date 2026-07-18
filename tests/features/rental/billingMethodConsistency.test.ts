@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { rentalBillingMethods, isRentalBillingMethod } from "../types";
-import { BillingRateEngine } from "../billing/engine/BillingRateEngine";
-import type { BillingCalculationTerms } from "../billing/engine/BillingCalculationTerms";
-import type { DeurRecord } from "../deur/types";
+import { rentalBillingMethods, isRentalBillingMethod } from "@/features/rental/types";
+import { BillingRateEngine } from "@/features/rental/billing/engine/BillingRateEngine";
+import type { BillingCalculationTerms } from "@/features/rental/billing/engine/BillingCalculationTerms";
+import type { DeurRecord } from "@/features/rental/deur/types";
 
 /**
  * Regression coverage for the "Per Lot" (rental-side) vs "One Lot"

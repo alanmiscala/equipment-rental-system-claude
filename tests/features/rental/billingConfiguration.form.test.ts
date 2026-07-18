@@ -9,10 +9,10 @@ import {
   resolveReadOnlyContractHeader,
   validateRentalContractForm,
   type RentalContractFormValues,
-} from "../workspace/billing/contractForm";
-import type { RentalAggregate } from "../aggregate";
-import type { RentalRecord } from "../types";
-import type { RentalContractRecord } from "../types/RentalContract";
+} from "@/features/rental/workspace/billing/contractForm";
+import type { RentalAggregate } from "@/features/rental/aggregate";
+import type { RentalRecord } from "@/features/rental/types";
+import type { RentalContractRecord } from "@/features/rental/types/RentalContract";
 
 function baseRental(overrides: Partial<RentalRecord> = {}): RentalRecord {
   return {
@@ -56,7 +56,6 @@ function baseAggregate(overrides: Partial<RentalAggregate> = {}): RentalAggregat
   return {
     rental: baseRental(),
     contract: undefined,
-    equipmentItems: [],
     deurs: [],
     billing: {
       totalOperatingCharge: 0,

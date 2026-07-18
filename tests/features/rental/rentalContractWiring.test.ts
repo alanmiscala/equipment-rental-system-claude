@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { rentalContractRepository } from "../repository/rentalContractRepository";
-import { createRentalContract } from "../utils/createRentalContract";
-import { updateRentalContract } from "../utils/updateRentalContract";
-import type { RentalContractRecord } from "../types/RentalContract";
-import { buildRentalAggregate } from "../aggregate/builders/buildRentalAggregate";
-import { RentalAggregateAssembler } from "../aggregate/assembler/RentalAggregateAssembler";
-import type { RentalRecord } from "../types";
+import { rentalContractRepository } from "@/features/rental/repository/rentalContractRepository";
+import { createRentalContract } from "@/features/rental/utils/createRentalContract";
+import { updateRentalContract } from "@/features/rental/utils/updateRentalContract";
+import type { RentalContractRecord } from "@/features/rental/types/RentalContract";
+import { buildRentalAggregate } from "@/features/rental/aggregate/builders/buildRentalAggregate";
+import { RentalAggregateAssembler } from "@/features/rental/aggregate/assembler/RentalAggregateAssembler";
+import type { RentalRecord } from "@/features/rental/types";
 
 function baseContractInput(rentalId: string): Omit<
   RentalContractRecord,
@@ -52,6 +52,7 @@ describe("createRentalContract / updateRentalContract", () => {
     const contract = createRentalContract(baseContractInput("rental-1"));
     const updated = updateRentalContract(contract, {
       unitRate: 2000,
+      // @ts-expect-error - rentalId must not be reassignable via update
       rentalId: "rental-2",
     });
     expect(updated.rentalId).toBe("rental-1");
