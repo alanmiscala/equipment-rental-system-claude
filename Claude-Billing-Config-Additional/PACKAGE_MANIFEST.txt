@@ -1,0 +1,84 @@
+﻿CLAUDE BILLING CONFIGURATION - ADDITIONAL FILES
+
+Purpose:
+This package contains the additional files requested after the first
+Billing Configuration inspection.
+
+Project root:
+C:\Projects\EquipmentRentalSystem - Claude
+
+Important approved rules:
+
+1. Billing Configuration belongs inside the existing Billing tab.
+2. Do not create another workspace tab.
+3. Persist global billing defaults separately from rental-specific terms.
+4. Save rental billing terms as a rental-specific snapshot.
+5. Changing defaults must not alter existing rentals.
+6. Optional zero-value billing items must not appear in statements.
+7. Required primary rates must still block billing when zero.
+8. Do not modify code yet. Inspect these files first.
+
+FILES COPIED:
+src/features/rental/types/RentalContract.ts
+src/features/rental/repository/rentalContractRepository.ts
+src/features/rental/services/RentalWorkflowRules.ts
+src\features\rental\aggregate\index.ts
+src\features\rental\aggregate\types.ts
+src\features\rental\aggregate\assembler\RentalAggregateAssembler.ts
+src\features\rental\aggregate\builders\buildRentalAggregate.ts
+src\features\rental\aggregate\hooks\useRentalAggregate.ts
+src\features\rental\aggregate\resolver\RentalAggregateResolver.ts
+src\features\rental\aggregate\services\rentalAggregate.service.ts
+src/features/rental/billing/engine/BillingCalculationTerms.ts
+src/features/rental/billing/engine/BillingChargeResult.ts
+src/features/rental/repository/index.ts
+src/features/rental/aggregate/index.ts
+src/features/rental/billing/engine/index.ts
+src\features\rental\billingstatement\ApprovalService.ts
+src\features\rental\billingstatement\repository.ts
+src\features\rental\billingstatement\types.ts
+src\features\rental\billingstatement\services\BillingReadiness.ts
+src\features\rental\billingstatement\services\BillingStatementWorkflow.ts
+src\features\rental\billingstatement\services\calculateDeurBillingStatementLine.ts
+src\features\rental\workspace\billing\components\BillingDraftTable.tsx
+src\features\rental\workspace\billing\components\BillingHeader.tsx
+src\features\rental\workspace\billing\components\BillingLineRow.tsx
+src\features\rental\workspace\billing\components\BillingPeriodSelector.tsx
+src\features\rental\workspace\billing\components\BillingPreviewTable.tsx
+src\features\relationships\deletionGuards.ts
+src\features\rental\billing\application\generateBillingStatement.ts
+src\features\rental\billing\application\index.ts
+src\features\rental\billing\engine\BillingCalculationTerms.ts
+src\features\rental\billing\engine\BillingChargeResult.ts
+src\features\rental\billing\engine\BillingRateEngine.ts
+src\features\rental\billing\engine\mapRentalContractToBillingCalculationTerms.ts
+src\features\rental\billing\repository\billingStatementRepository.ts
+src\features\rental\billing\repository\index.ts
+src\features\rental\billing\types.ts
+src\features\rental\deur\billing\evaluateDeurBillingEligibility.ts
+src\features\rental\deur\repository\deurRepository.ts
+src\features\rental\deur\types.ts
+src\features\rental\services\RentalWorkflowRules.ts
+src\features\rental\types\RentalContract.ts
+src\features\rental\workspace\billing\BillingBuilder.ts
+src\features\rental\workspace\billing\BillingPanel.tsx
+src\features\rental\workspace\billing\createBillingStatement.ts
+src\features\rental\workspace\billing\types.ts
+src\features\rental\workspace\billing\useBillingDrafts.ts
+src\features\rental\workspace\billing\useBillingWizard.ts
+src\features\rental\workspace\closing\CloseReadinessBuilder.ts
+src\features\rental\workspace\overview\cards\FinancialSummaryCard.tsx
+src\features\rental\workspace\overview\mapper\RentalOverviewMapper.ts
+src\features\rental\workspace\overview\types.ts
+src\features\rental\workspace\RentalWorkspaceProvider.tsx
+src\features\rental\types.ts
+src\pages\Billing\index.tsx
+src\features\rental\application\getRentalContract.ts
+src\features\rental\context\RentalContext.tsx
+src\features\rental\repository\rentalContractRepository.ts
+src\features\rental\utils\createRentalContract.ts
+src\features\rental\utils\updateRentalContract.ts
+src\features\rental\workspace\billing\BillingPreviewBuilder.ts
+
+REQUESTED PATHS NOT FOUND:
+src/features/rental/types/index.ts
