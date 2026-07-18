@@ -12,6 +12,8 @@ import type { AssignmentRecord } from "@/features/assignment/types";
 
 import type { DeurRecord } from "../deur/types";
 
+import type { RentalEquipmentItemRecord } from "../types/RentalEquipmentItem";
+
 export interface BillingSummary {
 
   hasStatement?: boolean;
@@ -38,6 +40,26 @@ export interface BillingSummary {
   outstanding: number;
 }
 
+/**
+ * One equipment participating in the rental, with its related records
+ * resolved. Today every rental resolves to exactly one of these (either
+ * a persisted RentalEquipmentItemRecord, or one synthesized from the
+ * rental's own single-equipment fields for backward compatibility).
+ */
+export interface RentalEquipmentItemAggregate {
+  item: RentalEquipmentItemRecord;
+
+  equipment?: EquipmentRecord;
+
+  operator?: Operator;
+
+  assignment?: AssignmentRecord;
+
+  contract?: RentalContractRecord;
+
+  deurs: DeurRecord[];
+}
+
 export interface RentalAggregate {
   rental: RentalRecord;
 
@@ -56,6 +78,14 @@ export interface RentalAggregate {
   assignment?: AssignmentRecord;
 
   activeDeur?: DeurRecord;
+
+  /**
+   * All equipment participating in this rental. Transitional: the
+   * singular `contract` / `equipment` / `operator` / `assignment` fields
+   * above are still populated (from equipmentItems[0]) for existing
+   * consumers - do not remove them yet.
+   */
+  equipmentItems: RentalEquipmentItemAggregate[];
 
 /**
  * All DEUR records belonging

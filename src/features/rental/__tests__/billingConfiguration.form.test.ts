@@ -56,6 +56,7 @@ function baseAggregate(overrides: Partial<RentalAggregate> = {}): RentalAggregat
   return {
     rental: baseRental(),
     contract: undefined,
+    equipmentItems: [],
     deurs: [],
     billing: {
       totalOperatingCharge: 0,

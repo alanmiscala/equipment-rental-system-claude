@@ -14,6 +14,7 @@ import type { RentalContractRecord } from "../../types/RentalContract";
 
 import type {
   RentalAggregate,
+  RentalEquipmentItemAggregate,
 } from "../types";
 
 interface BuildRentalAggregateParams {
@@ -28,6 +29,16 @@ interface BuildRentalAggregateParams {
   project?: ProjectRecord;
 
   operator?: Operator;
+
+  /**
+   * All equipment participating in this rental. When provided, the
+   * singular contract/equipment/assignment/operator fields below are
+   * derived from equipmentItems[0] instead of the explicit params -
+   * this is the path RentalWorkspaceProvider uses in production. The
+   * explicit params remain supported directly for existing callers
+   * that don't yet pass equipmentItems.
+   */
+  equipmentItems?: RentalEquipmentItemAggregate[];
 
   /**
    * Today's active DEUR
@@ -50,22 +61,27 @@ export function buildRentalAggregate({
   assignment,
   project,
   operator,
+  equipmentItems = [],
   activeDeur,
   deurs = [],
   billing,
 }: BuildRentalAggregateParams): RentalAggregate {
+  const primaryItem = equipmentItems[0];
+
   return {
     rental,
 
-    contract,
+    contract: primaryItem ? primaryItem.contract : contract,
 
-    equipment,
+    equipment: primaryItem ? primaryItem.equipment : equipment,
 
-    assignment,
+    assignment: primaryItem ? primaryItem.assignment : assignment,
 
     project,
 
-    operator,
+    operator: primaryItem ? primaryItem.operator : operator,
+
+    equipmentItems,
 
     activeDeur,
 

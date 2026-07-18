@@ -16,9 +16,12 @@ import { useProject } from "@/features/project/context/ProjectContext";
 import {
   buildRentalAggregate,
   type RentalAggregate,
+  type RentalEquipmentItemAggregate,
 } from "@/features/rental/aggregate";
 
 import { deurRepository } from "@/features/rental/deur/repository/deurRepository";
+import { rentalEquipmentItemRepository } from "@/features/rental/repository/rentalEquipmentItemRepository";
+import { synthesizeRentalEquipmentItems } from "@/features/rental/aggregate/builders/synthesizeRentalEquipmentItems";
 import { billingStatementRepository } from "@/features/rental/billingstatement/repository";
 import { isInvoicePreparationComplete } from "@/features/rental/billingstatement/services/BillingReadiness";
 import { subscribeRentalWorkspaceChange } from "./workspaceRefresh";
@@ -61,29 +64,51 @@ export default function RentalWorkspaceProvider({
       return undefined;
     }
 
-    const assignment =
-      rental.assignmentId
-        ? assignments.find((item) => item.id === rental.assignmentId)
-        : undefined;
-
-    const equipment =
-      equipmentRecords.find((item) => item.id === rental.equipmentId);
-
-    const operator =
-      operators.find(
-        (item) => item.id === (rental.operatorId ?? assignment?.operatorId)
-      );
-
     const project =
       projects.find((item) => item.id === rental.projectId);
-
-    const contract =
-      contracts.find((item) => item.rentalId === rental.id);
 
     // NEW
     const deurs =
       deurRepository.getByRentalId(
         rental.id
+      );
+
+    const existingEquipmentItems =
+      rentalEquipmentItemRepository.getByRentalId(rental.id);
+
+    const equipmentItems: RentalEquipmentItemAggregate[] =
+      synthesizeRentalEquipmentItems(rental, existingEquipmentItems).map(
+        (item) => {
+          const itemAssignment =
+            item.assignmentId
+              ? assignments.find((a) => a.id === item.assignmentId)
+              : undefined;
+
+          const itemEquipment =
+            equipmentRecords.find((e) => e.id === item.equipmentId);
+
+          const itemOperator =
+            operators.find(
+              (o) => o.id === (item.operatorId ?? itemAssignment?.operatorId)
+            );
+
+          const itemContract =
+            contracts.find(
+              (c) => c.rentalId === rental.id && c.equipmentId === item.equipmentId
+            );
+
+          const itemDeurs =
+            deurs.filter((d) => d.equipmentId === item.equipmentId);
+
+          return {
+            item,
+            equipment: itemEquipment,
+            operator: itemOperator,
+            assignment: itemAssignment,
+            contract: itemContract,
+            deurs: itemDeurs,
+          };
+        }
       );
 
     const statements = billingStatementRepository.getAll().filter(
@@ -103,10 +128,7 @@ export default function RentalWorkspaceProvider({
 
     return buildRentalAggregate({
       rental,
-      contract,
-      equipment,
-      assignment,
-      operator,
+      equipmentItems,
       project,
       activeDeur,
       deurs,

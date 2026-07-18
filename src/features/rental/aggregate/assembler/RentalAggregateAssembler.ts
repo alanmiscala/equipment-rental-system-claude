@@ -14,6 +14,7 @@ import type { RentalContractRecord } from "../../types/RentalContract";
 
 import type {
   RentalAggregate,
+  RentalEquipmentItemAggregate,
 } from "../types";
 
 import {
@@ -32,6 +33,8 @@ export interface RentalAggregateAssemblerData {
   project?: ProjectRecord;
 
   operator?: Operator;
+
+  equipmentItems?: RentalEquipmentItemAggregate[];
 
   /**
    * Today's active DEUR.
@@ -63,6 +66,8 @@ export class RentalAggregateAssembler {
       project: data.project,
 
       operator: data.operator,
+
+      equipmentItems: data.equipmentItems,
 
       activeDeur: data.activeDeur,
 
